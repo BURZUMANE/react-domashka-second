@@ -12,6 +12,7 @@ export default function FormInput({
       placeholder={placeholder}
       type={type}
       value={value}
+      required
     >
     </input>
   );

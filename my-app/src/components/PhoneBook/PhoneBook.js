@@ -1,70 +1,46 @@
 import React, { Component } from "react";
-import FormInput from "./ContactForm/FormInput/FormInput";
-import BtnFormSubmit from "./ContactForm/BtnFormSubmit/BtnFormSubmit";
-import ContactList from "./ContactList/ContactList";
-import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";
-import config from "./ContactForm/config.json"
-
-const StyledWrapper = styled.div`
-  ul {
-    list-style: none;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-  input{
-      width:270px;
-  }
-  button{
-      width:270px
-  }
-`;
+import StyledWrapper from "./StyledWrapper";
+import ContactForm from "./ContactForm/ContactForm";
+// import ContactList from "./ContactList/ContactList";
+import Filter from "./Filter/Filter";
 
 class PhoneBook extends Component {
-  state = {
-    contacts: [],
-    filter:"",
-    name: "",
-    number: "",
-  };
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const contact = {
-      id: uuidv4(),
-      name: this.state.name,
-      number: this.state.number
+  constructor() {
+    super();
+    this.state = {
+      contacts: [
+        {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+        {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+        {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+        {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+      ],
+      filter: "",
     };
-    this.setState({ 
-        name: "",
-        number: "",
- });
-    this.setState({ contacts: [...this.state.contacts, contact] });
-    console.log("this.state", this.state);
-  };
-  handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
+    this.setChanger = this.setChanger.bind(this);
+    this.filterFunc = this.filterFunc.bind(this);
+    this.deleteContact = this.deleteContact.bind(this);
+  }    
+  setChanger(item) {
+    this.setState({ contacts: [...this.state.contacts, item] });
+    console.log(this.state);
+  }
+  filterFunc(e) {
+    this.setState({ filter: e.target.value });
+    console.log('this.state.filter', this.state.filter)
+  }
+  deleteContact(id){
+    this.setState({contacts: this.state.contacts.filter(
+      contact => contact.id !== id
+    )})
+  }
+
   render() {
     return (
       <StyledWrapper>
         <h1>Phonebook</h1>
-        <form onSubmit={this.handleSubmit}>
-          <FormInput
-            handleChange={this.handleChange}
-            options={config.name}
-            value={this.state.name}
-          />
-          <FormInput
-            handleChange={this.handleChange}
-            options={config.number}
-            value={this.state.number}
-          />
-          <BtnFormSubmit />
-          <h2>Contacts</h2>
-        </form>
-          <ContactList contacts={this.state.contacts}></ContactList>
+        <ContactForm setChanger={this.setChanger} contacts={this.state.contacts}/>
+        <Filter contacts={this.state.contacts} filter={this.state.filter} filterFunc={this.filterFunc} deleteContact={this.deleteContact}/>
+        {/* <ContactList contacts={this.state.contacts} /> */}
       </StyledWrapper>
     );
   }
