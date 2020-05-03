@@ -1,6 +1,7 @@
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function FormInput({
+function FormInput({
   handleChange,
   options: { name, placeholder, type },
   value,
@@ -13,7 +14,18 @@ export default function FormInput({
       type={type}
       value={value}
       required
-    >
-    </input>
+    />
   );
 }
+
+FormInput.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  options: PropTypes.shape({
+    name: PropTypes.string,
+    placeholder: PropTypes.string,
+    type: PropTypes.string,
+  }).isRequired,
+  value: PropTypes.string.isRequired,
+};
+
+export default FormInput;

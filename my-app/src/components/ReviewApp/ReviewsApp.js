@@ -1,14 +1,14 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment, Component } from 'react';
 // import styled from "styled-components";
-import { CounterPanel } from "./Counter/Counter";
-import ShowRevs from "./ShowRevs/ShowRevs";
-import Notification from "./Notification/Notification";
-import styled from 'styled-components'
+import { CounterPanel } from './Counter/Counter';
+import ShowRevs from './ShowRevs/ShowRevs';
+import Notification from './Notification/Notification';
+import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
-max-width:300px;
-margin:0 auto;
-`
+  max-width: 300px;
+  margin: 0 auto;
+`;
 
 class ReviewsApp extends Component {
   state = {

@@ -1,13 +1,14 @@
-import React, { Component } from "react";
-import { v4 as uuidv4 } from "uuid";
-import FormInput from "./FormInput/FormInput";
-import BtnFormSubmit from "./BtnFormSubmit/BtnFormSubmit";
-import config from "./config.json";
+import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import FormInput from './FormInput/FormInput';
+import BtnFormSubmit from './BtnFormSubmit/BtnFormSubmit';
+import config from './config.json';
+import PropTypes from 'prop-types';
 
 class ContactForm extends Component {
   state = {
-    name: "",
-    number: "",
+    name: '',
+    number: '',
   };
   handleSubmit = (e) => {
     const { setChanger, contacts } = this.props;
@@ -17,14 +18,17 @@ class ContactForm extends Component {
       name: this.state.name,
       number: this.state.number,
     };
-    console.log('contact.name', contact.name)
-    if(contacts.find(item =>item.name.toLowerCase() === contact.name.toLowerCase())) {
+    if (
+      contacts.find(
+        (item) => item.name.toLowerCase() === contact.name.toLowerCase()
+      )
+    ) {
       alert('That name already exissts in your phone book');
-      return
-    };
+      return;
+    }
     this.setState({
-      name: "",
-      number: "",
+      name: '',
+      number: '',
     });
     // this.setState({ contacts: [...this.state.contacts, contact] });
     setChanger(contact);
@@ -51,5 +55,14 @@ class ContactForm extends Component {
     );
   }
 }
+
+FormInput.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+  options: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }),
+};
 
 export default ContactForm;

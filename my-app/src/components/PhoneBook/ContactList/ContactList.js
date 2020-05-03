@@ -1,12 +1,23 @@
-import React from "react";
-import ContactListItem from "./ContactListItem/ContactListItem";
+import React from 'react';
+import PropTypes from 'prop-types';
+import ContactListItem from './ContactListItem/ContactListItem';
 
-export default function ContactList({ contacts, deleteContact}) {
+function ContactList({ contacts, deleteContact }) {
   return (
     <ul>
       {contacts.map((contact) => (
-          <ContactListItem key={contact.id} contact={contact} deleteContact={deleteContact}/>
+        <ContactListItem
+          key={contact.id}
+          contact={contact}
+          deleteContact={deleteContact}
+        />
       ))}
     </ul>
   );
 }
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  deleteContact: PropTypes.func.isRequired,
+};
+export default ContactList;
